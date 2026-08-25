@@ -11,6 +11,7 @@ WARNING_COLOR := \033[33;1m
 RESET_COLOR := \033[m
 # ========================================================================
 ENV ?= dev
-INFRA_DIR := $(CURDIR)/infra/
+CLOUD_PROVIDER ?= azure
+INFRA_DIR := $(CURDIR)/infra/$(CLOUD_PROVIDER)
 TF_ENV_DIR := $(INFRA_DIR)/envs/$(ENV)
 ANSI_DIR := ansible

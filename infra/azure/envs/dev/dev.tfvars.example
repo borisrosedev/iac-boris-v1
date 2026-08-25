@@ -1,0 +1,9 @@
+rg_name                 = "DefaultResourceGroup-USW3"
+environment             = "dev"
+admin_username          =
+username                =
+address_spaces          = []
+subnet_address_prefixes = []
+computer_name           =
+vm_size                 = "Standard_B1s"
+admin_source_ip         =

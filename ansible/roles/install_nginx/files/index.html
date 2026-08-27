@@ -3,19 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IaC Cybersecurite - Devoir Ansible</title>
+  <title>Bienvenue sur le serveur nginx de Marie</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main>
-    <h1>Serveur nginx configure par Ansible</h1>
-    <p>
-      Cette page est servie par nginx, dont la configuration a ete generee
-      via un template Jinja2 (role <code>install_nginx</code>, variables
-      definies dans <code>defaults/main.yaml</code>).
-    </p>
+  <main class="page">
+    <span class="badge">nginx + Ansible + Jinja2</span>
+    <h1>Bienvenue sur le serveur nginx de Marie</h1>
 
     <section class="counter">
+      <p class="counter-label">Compteur dynamique (JavaScript cote client)</p>
       <p id="counter-value">0</p>
       <button id="counter-button" type="button">Cliquez ici</button>
     </section>

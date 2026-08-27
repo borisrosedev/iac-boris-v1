@@ -9,5 +9,10 @@ document.addEventListener("DOMContentLoaded", () => {
   buttonEl.addEventListener("click", () => {
     count += 1;
     valueEl.textContent = count;
+
+    // Petit effet visuel au clic (aucune dependance externe).
+    valueEl.classList.remove("bump");
+    void valueEl.offsetWidth; // relance l'animation CSS
+    valueEl.classList.add("bump");
   });
 });

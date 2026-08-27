@@ -1,0 +1,5 @@
+misconfigurations:
+  - id: AWS-0104
+    paths:
+      - "modules/security_group/main.tf"
+      - "../../modules/security_group/main.tf"

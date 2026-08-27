@@ -1,4 +1,5 @@
 include make/common.mk
-include make/git.mk
-include make/github.mk
-include make/ansible.mk
+include make/tf.mk
+include make/aws.mk
+include make/http.mk
+include make/ansi.mk

@@ -1,0 +1,48 @@
+---
+- name: Apt install nginx
+  become: true
+  ansible.builtin.apt:
+    state: present
+    name: nginx
+    update_cache: true
+
+- name: Create web directory
+  become: true
+  ansible.builtin.file:
+    path: "{{ nginx_web_root }}"
+    state: directory
+    mode: "0755"
+
+- name: Configure Nginx
+  become: true
+  ansible.builtin.template:
+    src: nginx.config.J2
+    dest: /etc/nginx/sites-available/mon-site
+    mode: "0644"
+  notify: Reload Nginx
+
+- name: Enable Nginx site
+  become: true
+  ansible.builtin.file:
+    src: /etc/nginx/sites-available/mon-site
+    dest: /etc/nginx/sites-enabled/mon-site
+    state: link
+  notify: Reload Nginx
+
+- name: Copy website files
+  become: true
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ nginx_web_root }}/{{ item }}"
+    mode: "0644"
+  loop:
+    - index.html
+    - style.css
+    - script.js
+
+- name: Start the service
+  become: true
+  ansible.builtin.service:
+    state: started
+    name: nginx
+    enabled: true

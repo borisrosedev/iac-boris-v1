@@ -1,5 +1,6 @@
 ---
-- name: Localhost Playbook
+- name: Nginx Web Server Playbook
   hosts: localhost
+  connection: local
   roles:
-    - local_project
+    - install_nginx

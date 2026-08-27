@@ -1,0 +1,126 @@
+:root {
+  color-scheme: light dark;
+  --accent: #2563eb;
+  --accent-dark: #1d4ed8;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --card-bg: #ffffff;
+  --border: #e5e7eb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: var(--text);
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%);
+}
+
+.page {
+  max-width: 32rem;
+  width: 100%;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 2.5rem;
+  box-shadow: 0 10px 30px -12px rgba(37, 99, 235, 0.15);
+  line-height: 1.6;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--accent-dark);
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+  border-radius: 999px;
+  padding: 0.25rem 0.75rem;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 1.5rem;
+  margin: 0 0 0.75rem;
+}
+
+p {
+  color: var(--muted);
+  margin: 0 0 1rem;
+}
+
+code {
+  background: #f1f5f9;
+  border-radius: 0.25rem;
+  padding: 0.1rem 0.35rem;
+  font-size: 0.9em;
+  color: var(--text);
+}
+
+.counter {
+  margin-top: 1.5rem;
+  padding: 1.75rem 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  text-align: center;
+  background: #f8fafc;
+}
+
+.counter-label {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin: 0 0 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+#counter-value {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--accent-dark);
+  margin: 0 0 1.25rem;
+  transition: transform 0.15s ease;
+}
+
+#counter-value.bump {
+  transform: scale(1.15);
+}
+
+#counter-button {
+  padding: 0.6rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.5rem;
+  background: var(--accent);
+  color: white;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+#counter-button:hover {
+  background: var(--accent-dark);
+}
+
+#counter-button:active {
+  transform: scale(0.97);
+}
+
+.page-footer {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-align: center;
+}

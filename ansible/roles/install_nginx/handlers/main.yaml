@@ -1,0 +1,8 @@
+---
+# Bonus consigne : handler declenche uniquement quand la configuration
+# nginx change reellement (notify depuis tasks/main.yaml) - evite un
+# redemarrage inutile a chaque execution du playbook si rien n'a change.
+- name: Restart nginx
+  ansible.builtin.service:
+    name: nginx
+    state: restarted

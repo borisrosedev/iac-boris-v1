@@ -1,16 +1,58 @@
 ---
+# Fail-safe default applique aussi aux variables : on prefere echouer tot,
+# avant toute installation, plutot que de deployer une config nginx qui
+# ecoute sur un port invalide (meme logique que les "validation" doubles
+# cote Terraform : format + valeur).
+- name: Verifier que nginx_listen_port est un port TCP valide
+  ansible.builtin.assert:
+    that:
+      - nginx_listen_port | int >= 1
+      - nginx_listen_port | int <= 65535
+    fail_msg: "nginx_listen_port doit etre un port valide (1-65535), recu : {{ nginx_listen_port }}"
+    quiet: true
+
 - name: Apt instal nginx
-  become: true # elevation de privi
   ansible.builtin.apt:
     state: present
     name: nginx
     update_cache: true
+
+- name: Deployer le fichier de configuration nginx (Jinja2 + defaults/)
+  ansible.builtin.template:
+    src: nginx.config.J2
+    dest: /etc/nginx/sites-available/default
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Restart nginx
+
+# On valide la conf nginx complete tout de suite (et pas seulement via le
+# handler en fin de play) : si elle est invalide, le playbook s'arrete ici
+# et nginx n'est jamais redemarre avec une configuration cassee.
+- name: Valider la configuration nginx avant tout redemarrage
+  ansible.builtin.command: nginx -t
+  changed_when: false
+
+- name: Creer le dossier racine du site si besoin
+  ansible.builtin.file:
+    path: "{{ nginx_web_root }}"
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: "0755"
+
+# Copie tout le contenu de files/ tel quel : ajouter un nouveau fichier
+# web (une image, une autre page) n'implique pas de modifier cette tache.
+- name: Deployer les fichiers web (html, css, js)
+  ansible.builtin.copy:
+    src: "{{ role_path }}/files/"
+    dest: "{{ nginx_web_root }}/"
+    owner: www-data
+    group: www-data
+    mode: "0644"
+
 - name: Start the service
-  become: true
   ansible.builtin.service:
     state: started
     name: nginx
     enabled: true
-# Il manque qqch ici qui dira de changer
-# la configuration de nginx ou d'ajouter des
-# fichiers web ( css js et html )

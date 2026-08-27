@@ -1,0 +1,32 @@
+---
+# BONUS - durcissement du serveur : fail2ban bannit temporairement les IP
+# qui multiplient les tentatives de connexion echouees (defense in depth
+# au niveau applicatif, en plus du security group / NACL Terraform et du
+# pare-feu ufw).
+- name: Installer fail2ban
+  ansible.builtin.apt:
+    name: fail2ban
+    state: present
+    update_cache: true
+
+- name: Deployer une configuration locale (jail.local, Jinja2 + defaults/)
+  ansible.builtin.template:
+    src: jail.local.j2
+    dest: /etc/fail2ban/jail.local
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Restart fail2ban
+
+# Meme reflexe que pour nginx : on valide avant de redemarrer, pour ne
+# jamais se retrouver avec un service durci... a l'arret a cause d'une
+# config invalide.
+- name: Valider la configuration fail2ban avant tout redemarrage
+  ansible.builtin.command: fail2ban-client -t
+  changed_when: false
+
+- name: Demarrer et activer fail2ban
+  ansible.builtin.service:
+    name: fail2ban
+    state: started
+    enabled: true

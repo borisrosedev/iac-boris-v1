@@ -1,0 +1,11 @@
+---
+fail2ban_bantime: 1h
+fail2ban_findtime: 10m
+fail2ban_maxretry: 5
+fail2ban_ignoreip: 127.0.0.1/8
+
+# Liste plutot qu'une seule jail codee en dur : ajouter une protection
+# (ex. nginx-http-auth) se fait en ajoutant une ligne ici, sans toucher
+# au template ni aux tasks.
+fail2ban_jails:
+  - sshd

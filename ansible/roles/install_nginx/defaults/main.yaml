@@ -1,0 +1,23 @@
+---
+# Variables par defaut du role install_nginx.
+# Definies ici (dossier "defaults", priorite la plus basse dans Ansible)
+# pour pouvoir etre surchargees facilement depuis l'inventaire ou un
+# group_vars/host_vars, sans jamais avoir a toucher au role lui-meme.
+# Toutes sont consommees par templates/nginx.config.J2.
+
+# "_" = catch-all, repond a n'importe quel Host: entrant (pratique en
+# dev, pas de nom de domaine reserve pour ce lab).
+nginx_server_name: "_"
+
+# Port d'ecoute HTTP. Coherent avec la regle ingress 80 du security
+# group Terraform (voir infra/modules/security_group) : fail-safe
+# default, on ne sert que ce qui est explicitement autorise en amont.
+nginx_listen_port: 80
+
+# Racine web ou sont deposes les fichiers html/css/js (voir files/).
+nginx_web_root: /var/www/html
+
+# Fichier(s) d'index cherches par nginx, dans l'ordre.
+nginx_index_files:
+  - index.html
+  - index.htm

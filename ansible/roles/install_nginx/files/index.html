@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IaC Cybersecurite - Devoir Ansible</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main>
+    <h1>Serveur nginx configure par Ansible</h1>
+    <p>
+      Cette page est servie par nginx, dont la configuration a ete generee
+      via un template Jinja2 (role <code>install_nginx</code>, variables
+      definies dans <code>defaults/main.yaml</code>).
+    </p>
+
+    <section class="counter">
+      <p id="counter-value">0</p>
+      <button id="counter-button" type="button">Cliquez ici</button>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

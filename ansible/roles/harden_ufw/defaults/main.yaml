@@ -1,0 +1,10 @@
+---
+# Liste plutot que deux taches dupliquees : ajouter un port a autoriser
+# (ex. HTTPS/443 plus tard) se fait en ajoutant une ligne ici.
+# nginx_listen_port vient du role install_nginx (execute avant celui-ci
+# dans site.yml, ses defaults restent donc accessibles).
+ufw_allowed_ports:
+  - port: 22
+    proto: tcp
+  - port: "{{ nginx_listen_port | default(80) }}"
+    proto: tcp

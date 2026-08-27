@@ -1,0 +1,12 @@
+## Fichier genere par Ansible (role harden_fail2ban) - NE PAS MODIFIER A LA MAIN.
+## Variables definies dans roles/harden_fail2ban/defaults/main.yaml.
+
+[DEFAULT]
+bantime  = {{ fail2ban_bantime }}
+findtime = {{ fail2ban_findtime }}
+maxretry = {{ fail2ban_maxretry }}
+ignoreip = {{ fail2ban_ignoreip }}
+{% for jail in fail2ban_jails %}
+[{{ jail }}]
+enabled = true
+{% endfor %}

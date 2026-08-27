@@ -1,0 +1,12 @@
+---
+- name: Configurer le serveur web (nginx + durcissement)
+  hosts: dev
+  become: true # centralise ici plutot que repete sur chaque tache des roles
+
+  roles:
+    - role: install_nginx
+      tags: [nginx]
+    - role: harden_fail2ban
+      tags: [hardening, fail2ban]
+    - role: harden_ufw
+      tags: [hardening, ufw]

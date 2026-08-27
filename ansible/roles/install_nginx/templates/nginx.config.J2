@@ -1,0 +1,18 @@
+## Fichier genere par Ansible (role install_nginx) - NE PAS MODIFIER A LA MAIN.
+## Variables definies dans roles/install_nginx/defaults/main.yaml,
+## surchargeables depuis l'inventaire (group_vars/host_vars) sans
+## jamais toucher a ce template.
+
+server {
+    listen {{ nginx_listen_port }} default_server;
+    listen [::]:{{ nginx_listen_port }} default_server;
+
+    server_name {{ nginx_server_name }};
+    root {{ nginx_web_root }};
+
+    index {% for f in nginx_index_files %}{{ f }}{% if not loop.last %} {% endif %}{% endfor %};
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}

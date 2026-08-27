@@ -1,0 +1,37 @@
+---
+# BONUS - durcissement du serveur : pare-feu ufw au niveau de l'OS,
+# troisieme couche de "fail-safe default" en plus du security group et
+# de la Network ACL Terraform.
+#
+# ORDRE CRITIQUE : on autorise explicitement SSH et HTTP AVANT de poser
+# la politique "deny" par defaut et d'activer ufw. Ne jamais inverser -
+# sinon la connexion SSH utilisee par Ansible lui-meme serait coupee des
+# l'activation.
+- name: Installer ufw
+  ansible.builtin.apt:
+    name: ufw
+    state: present
+    update_cache: true
+
+- name: Autoriser les ports necessaires (avant toute activation d'ufw)
+  community.general.ufw:
+    rule: allow
+    port: "{{ item.port | string }}"
+    proto: "{{ item.proto }}"
+  loop: "{{ ufw_allowed_ports }}"
+  loop_control:
+    label: "{{ item.proto }}/{{ item.port }}"
+
+- name: Politique par defaut - tout refuser en entree (fail-safe default)
+  community.general.ufw:
+    direction: incoming
+    policy: deny
+
+- name: Politique par defaut - tout autoriser en sortie
+  community.general.ufw:
+    direction: outgoing
+    policy: allow
+
+- name: Activer ufw
+  community.general.ufw:
+    state: enabled

@@ -1,0 +1,8 @@
+---
+- name: Configure nginx web server
+  hosts: localhost
+  connection: local
+  become: true
+
+  roles:
+    - nginx
